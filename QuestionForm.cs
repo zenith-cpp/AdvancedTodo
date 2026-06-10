@@ -47,6 +47,7 @@ public class QuestionForm : Form
         this.Text = "AdvancedTodo";
         this.Size = new Size(800, 500);
         this.StartPosition = FormStartPosition.CenterScreen;
+        this.BackColor = Theme.questionFormBackgroundColor;
     
         InitializeEverything();
     }
@@ -55,11 +56,12 @@ public class QuestionForm : Form
     {
         Label mainTitle = new()
         {
-            Text = "Pick one.",
+            Text = "Pick your starter theme",
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleCenter,
+            Height = 50,
             Dock = DockStyle.Top,
-            Font = new Font("Arial", 16, FontStyle.Bold)
+            Font = new Font(Theme.universalFont, 16, FontStyle.Bold)
         };
 
         Button buttonLight = new()
@@ -67,7 +69,7 @@ public class QuestionForm : Form
             Text = "Light Theme",
             AutoSize = true,
             Location = new Point(225, 150),
-            Font = new Font("Arial", 14),
+            Font = new Font(Theme.universalFont, 14),
             Cursor = Cursors.Hand
         };
         
@@ -76,30 +78,20 @@ public class QuestionForm : Form
             Text = "Dark Theme",
             AutoSize = true,
             Location = new Point(425, 150),
-            Font = new Font("Arial", 14),
-            BackColor = Color.Black,
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat
+            Font = new Font(Theme.universalFont, 14),
+            Cursor = Cursors.Hand
         };
 
-        buttonDark.FlatAppearance.BorderSize = 0;
-        buttonDark.Cursor = Cursors.Hand;
-        buttonLight.Cursor = Cursors.Hand;
+        Form1.StyleButton(buttonDark , true , Theme.darkThemeBorderColor,  Theme.darkThemeBG );
+        Form1.StyleButton(buttonLight, false, Theme.lightThemeBorderColor, Theme.lightThemeBG);
 
-        buttonDark.MouseEnter += (s, e) =>
-        {
-            buttonDark.ForeColor = Color.Black;
-            buttonDark.BackColor = Color.White;
-            buttonDark.FlatAppearance.BorderSize = 1;
-            
-        };
+        buttonDark.MouseEnter += Form1.darkMouseEnter;
+        buttonDark.MouseLeave += Form1.darkMouseLeave;
 
-        buttonDark.MouseLeave += (s, e) =>
-        {
-            buttonDark.ForeColor = Color.White;
-            buttonDark.BackColor = Color.Black;
-        };
+        buttonLight.MouseEnter += Form1.lightMouseEnter;
+        buttonLight.MouseLeave += Form1.lightMouseLeave;
 
+        
         
 
         // depending on which button you click, it will log that data into ApplicationData/data.json.
