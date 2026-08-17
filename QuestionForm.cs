@@ -10,16 +10,15 @@ public class ApplicationData
 {
     // create a class to handle the data we will read from the json file
     public bool LoggedBefore {get; set;}
-    public string DarkOrLight {get; set;}
+    public string Theme {get; set;}
 };
-
 
 
 
 public class QuestionForm : Form
 {
 
-    public static string dataJSONpath = @"ApplicationData/data.json";
+    public static string dataJSONpath = Paths.pathToDataJSON;
 
     public static ApplicationData LoadData(string path) // `static` so this function can be accessed from anywhere in this project
     {
@@ -48,12 +47,13 @@ public class QuestionForm : Form
         this.Size = new Size(800, 500);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.BackColor = Theme.questionFormBackgroundColor;
-    
+
         InitializeEverything();
     }
 
     private void InitializeEverything()
     {
+        
         Label mainTitle = new()
         {
             Text = "Pick your starter theme",
@@ -107,7 +107,7 @@ public class QuestionForm : Form
             ApplicationData freshData = new ApplicationData()
             {
                 LoggedBefore = true,
-                DarkOrLight = "light"
+                Theme = "light"
             };
             WriteData(freshData, dataJSONpath);
 
@@ -130,7 +130,7 @@ public class QuestionForm : Form
             ApplicationData freshData = new ApplicationData()
             {
                 LoggedBefore = true,
-                DarkOrLight = "dark"
+                Theme = "dark"
             };
             WriteData(freshData, dataJSONpath);
 

@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-
 public class UserStats
 {
     public int currency_points           {get; set;}
@@ -42,9 +41,215 @@ namespace AdvancedTodo
     public static class BtnFunc // `static` so it can be used in other files. this is a util file after all
     {
 
+        public static void themeCheck(List<Control> listOfWidgets, string theme)
+        {
+            foreach(var widget in listOfWidgets)
+            {
+                if(theme == "dark")
+                {
+                    widget.BackColor = Theme.darkThemeBG;
+                    widget.ForeColor = Theme.darkThemeFG;
+
+                    if(widget is Button btn)
+                    {
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.FlatAppearance.BorderColor = Theme.darkThemeBorderColor;
+                        btn.MouseEnter += Form1.darkMouseEnter;
+                        btn.MouseLeave += Form1.darkMouseLeave;
+                    }
+                } else if(theme == "darkrose")
+                {
+                    widget.BackColor = Theme.darkRoseThemeBG;
+                    widget.ForeColor = Theme.darkRoseThemeFG;
+
+                    if(widget is Button btn)
+                    {
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.FlatAppearance.BorderColor = Theme.darkRoseThemeBorderColor;
+                        btn.MouseEnter += Form1.darkRoseMouseEnter;
+                        btn.MouseLeave += Form1.darkRoseMouseLeave;
+                    }
+                } else if(theme == "blackAndGreen")
+                {
+                    widget.BackColor = Theme.blackAndGreenThemeBG;
+                    widget.ForeColor = Theme.blackAndGreenThemeFG;
+                    
+                    if(widget is Button btn)
+                    {
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.FlatAppearance.BorderColor = Theme.blackAndGreenThemeBorderColor;
+                        btn.MouseEnter += Form1.blackAndGreenMouseEnter;
+                        btn.MouseLeave += Form1.blackAndGreenMouseLeave;
+                    }
+                } else if(theme == "blackAndGold")
+                {
+                    widget.BackColor = Theme.blackAndGoldThemeBG;
+                    widget.ForeColor = Theme.blackAndGoldThemeFG;
+                    
+                    if(widget is Button btn)
+                    {
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.FlatAppearance.BorderColor = Theme.blackAndGoldThemeBorderColor;
+                        btn.MouseEnter += Form1.blackAndGoldMouseEnter;
+                        btn.MouseLeave += Form1.blackAndGoldMouseLeave;
+                    }
+                } else
+                {
+                    // default to light
+                    widget.BackColor = Theme.lightThemeBG;
+                    widget.ForeColor = Theme.lightThemeFG;
+                    
+                    if(widget is Button btn)
+                    {
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.FlatAppearance.BorderColor = Theme.lightThemeBorderColor;
+                        btn.MouseEnter += Form1.lightMouseEnter;
+                        btn.MouseLeave += Form1.lightMouseLeave;
+                    }
+                }
+            }
+        }
+
+        
+        public static void themeCheckSidePanel(Control sidepanel, List<Control> listOfWidgetsOnSidePanel, string theme)
+        {
+            if(theme == "dark")
+            {
+                sidepanel.BackColor = Theme.darkThemeSidePanelBG;
+                if(listOfWidgetsOnSidePanel.Any())
+                {
+                    foreach(var widget in listOfWidgetsOnSidePanel)
+                    {
+                        widget.BackColor = Theme.darkThemeSidePanelBG;
+                        widget.ForeColor = Theme.darkThemeFG;
+                        
+                        if(widget is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Theme.darkThemeBorderColor;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.MouseEnter += Form1.darkMouseEnter;
+                            btn.MouseLeave += (s, e) => Form1.generalMouseLeave(s, e, Theme.darkThemeSidePanelBG, Theme.darkThemeFG);
+                        }
+                    }
+                }
+            } else if(theme == "darkrose")
+            {
+                sidepanel.BackColor = Theme.darkRoseThemeSidePanelBG;
+                if(listOfWidgetsOnSidePanel.Any())
+                {
+                    foreach(var widget in listOfWidgetsOnSidePanel)
+                    {
+                        widget.BackColor = Theme.darkRoseThemeSidePanelBG;
+                        widget.ForeColor = Theme.darkRoseThemeFG;
+                        
+                        if(widget is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Theme.darkRoseThemeBorderColor;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.MouseEnter += Form1.darkRoseMouseEnter;
+                            btn.MouseLeave += (s, e) => Form1.generalMouseLeave(s, e, Theme.darkRoseThemeSidePanelBG, Theme.darkRoseThemeFG);
+                        }
+                    }
+                }
+            } else if(theme == "blackAndGreen")
+            {
+                sidepanel.BackColor = Theme.blackAndGreenThemeSidePanelBG;
+                if(listOfWidgetsOnSidePanel.Any())
+                {
+                    foreach(var widget in listOfWidgetsOnSidePanel)
+                    {
+                        widget.BackColor = Theme.blackAndGreenThemeSidePanelBG;
+                        widget.ForeColor = Theme.blackAndGreenThemeFG;
+                        
+                        if(widget is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Theme.blackAndGreenThemeBorderColor;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.MouseEnter += Form1.blackAndGreenMouseEnter;
+                            btn.MouseLeave += (s, e) => Form1.generalMouseLeave(s, e, Theme.blackAndGreenThemeSidePanelBG, Theme.blackAndGreenThemeFG);
+                        }
+                    }
+                }
+            } else if(theme == "blackAndGold")
+            {
+                sidepanel.BackColor = Theme.blackAndGoldThemeSidePanelBG;
+                if(listOfWidgetsOnSidePanel.Any())
+                {
+                    foreach(var widget in listOfWidgetsOnSidePanel)
+                    {
+                        widget.BackColor = Theme.blackAndGoldThemeSidePanelBG;
+                        widget.ForeColor = Theme.blackAndGoldThemeFG;
+                        
+                        if(widget is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Theme.blackAndGoldThemeBorderColor;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.MouseEnter += Form1.blackAndGoldMouseEnter;
+                            btn.MouseLeave += (s, e) => Form1.generalMouseLeave(s, e, Theme.blackAndGoldThemeSidePanelBG, Theme.blackAndGoldThemeFG);
+                        }
+                    }
+                }
+            } else
+            {
+                // default to light
+                sidepanel.BackColor = Theme.lightThemeSidePanelBG;
+                if(listOfWidgetsOnSidePanel.Any())
+                {
+                    foreach(var widget in listOfWidgetsOnSidePanel)
+                    {
+                        widget.BackColor = Theme.lightThemeSidePanelBG;
+                        widget.ForeColor = Theme.lightThemeFG;
+                        
+                        if(widget is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Theme.lightThemeBorderColor;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.MouseEnter += Form1.lightMouseEnter;
+                            btn.MouseLeave += (s, e) => Form1.generalMouseLeave(s, e, Theme.lightThemeSidePanelBG, Theme.lightThemeFG);
+                        }
+                    }
+                }
+            }
+        }
+        
+        public static void addHoverEffect(Control widget, string theme)
+        {
+            if(theme == "dark")
+            {
+                widget.Cursor = Cursors.Hand;
+                widget.MouseEnter += (s, e) => widget.ForeColor = Theme.darkThemeLabelMouseEnter;
+                widget.MouseLeave += (s, e) => widget.ForeColor = Theme.darkThemeFG;
+            } else if(theme == "darkrose")
+            {
+                widget.Cursor = Cursors.Hand;
+                widget.MouseEnter += (s, e) => widget.ForeColor = Theme.darkRoseThemeLabelMouseEnter;
+                widget.MouseLeave += (s, e) => widget.ForeColor = Theme.darkRoseThemeFG;
+            } else if(theme == "blackAndGreen")
+            {
+                widget.Cursor = Cursors.Hand;
+                widget.MouseEnter += (s, e) => widget.ForeColor = Theme.blackAndGreenThemeLabelMouseEnter;
+                widget.MouseLeave += (s, e) => widget.ForeColor = Theme.blackAndGreenThemeFG;
+            } else if(theme == "blackAndGold")
+            {
+                widget.Cursor = Cursors.Hand;
+                widget.MouseEnter += (s, e) => widget.ForeColor = Theme.blackAndGoldThemeLabelMouseEnter;
+                widget.MouseLeave += (s, e) => widget.ForeColor = Theme.blackAndGoldThemeFG;
+            } else
+            {
+                widget.Cursor = Cursors.Hand;
+                widget.MouseEnter += (s, e) => widget.ForeColor = Theme.lightThemeLabelMouseEnter;
+                widget.MouseLeave += (s, e) => widget.ForeColor = Theme.lightThemeFG;
+            }
+        }
+
         public static UserStats LoadUserStats()
         {
-            string path = @"ApplicationData/user_stats.json";
+            string path = Paths.pathToUserStatsJSON;
             if(File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -58,7 +263,7 @@ namespace AdvancedTodo
         }
         public static ShopItemsData LoadShopItemsData()
         {
-            string path = @"ApplicationData/shop_items.json";
+            string path = Paths.pathToShopItemsJSON;
             if(File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -72,7 +277,7 @@ namespace AdvancedTodo
         }
         public static void OverwriteBadgeData(BadgeData dataToWriteIntoJSON)
         {
-            string path = @"ApplicationData/badges.json";
+            string path = Paths.pathToBadgesJSON;
             if(File.Exists(path))
             {
                 string json = JsonSerializer.Serialize(dataToWriteIntoJSON, new JsonSerializerOptions 
@@ -90,7 +295,7 @@ namespace AdvancedTodo
         }
         public static void OverwriteUserStats(UserStats dataToWriteIntoJSON)
         {
-            string path = @"ApplicationData/user_stats.json";
+            string path = Paths.pathToUserStatsJSON;
             if(File.Exists(path))
             {
                 string json = JsonSerializer.Serialize(dataToWriteIntoJSON, new JsonSerializerOptions 
@@ -108,7 +313,7 @@ namespace AdvancedTodo
         }
         public static void OverwriteShopItems(ShopItemsData dataToWriteIntoJSON)
         {
-            string path = @"ApplicationData/shop_items.json";
+            string path = Paths.pathToShopItemsJSON;
             if(File.Exists(path))
             {
                 string json = JsonSerializer.Serialize(dataToWriteIntoJSON, new JsonSerializerOptions 
@@ -127,7 +332,7 @@ namespace AdvancedTodo
         
         public static void OverwriteData(ApplicationData dataToWriteIntoJSON)
         {
-            string path = @"ApplicationData/data.json";
+            string path = Paths.pathToDataJSON;
             if(File.Exists(path))
             {
                 string json = JsonSerializer.Serialize(dataToWriteIntoJSON, new JsonSerializerOptions 
@@ -161,7 +366,6 @@ namespace AdvancedTodo
                 AutoSize = true
             };
 
-            // Here comes the shit ton of if-statements
             if(themeName == "Dark Rose Theme")
             {
                 themePreview.BackColor = Theme.darkRoseThemeBG;
@@ -197,7 +401,6 @@ namespace AdvancedTodo
             
             at.Show();
             ApplicationData data = QuestionForm.LoadData(QuestionForm.dataJSONpath);
-            bool dark = data.DarkOrLight == "dark";
 
             FlowLayoutPanel panel = new()
             {
@@ -206,26 +409,21 @@ namespace AdvancedTodo
                 WrapContents  = false,
                 Padding       = new Padding(20),
                 AutoScroll    = true,
-                BackColor     = dark ? Theme.darkThemeBG : Theme.lightThemeBG
             };
 
 
             Label instruction1 = new()
             {
                 Text = "Fill out the form.",
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                 Font = new Font(Theme.universalFont, 14),
-                AutoSize = true,
+                AutoSize = true
             };
 
             Label instruction2 = new()
             {
                 Text = "Enter what your task should be:",
                 Font = new Font(Theme.universalFont, 12),
-                AutoSize = true,
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
+                AutoSize = true
 
             };
 
@@ -233,8 +431,6 @@ namespace AdvancedTodo
             {
                 Width = 540,
                 Height = 35,
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(0, 4, 0, 12),
                 Font = new Font(Theme.universalFont, 12),
@@ -244,9 +440,7 @@ namespace AdvancedTodo
             {
                 Text = "How much To-do coins should you get for this task? (MAX. 100)",
                 Font = new Font(Theme.universalFont, 12),
-                AutoSize = true,
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG
+                AutoSize = true
             };
 
             NumericUpDown amountOfPTS = new()
@@ -256,17 +450,13 @@ namespace AdvancedTodo
                 Width = 540,
                 Height = 35,
                 Margin = new Padding(0, 4, 0, 12),
-                Font = new Font(Theme.universalFont, 12),
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG
+                Font = new Font(Theme.universalFont, 12)
             };
 
             Label instruction4 = new()
             {
                 Text = "Explain the task, or leave it blank",
                 Font = new Font(Theme.universalFont, 12),
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                 AutoSize = true
             };
 
@@ -275,8 +465,6 @@ namespace AdvancedTodo
                 Width = 540,
                 Height = 80,
                 Font = new Font(Theme.universalFont, 12),
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                 BorderStyle = BorderStyle.FixedSingle,
                 Multiline = true,
                 Margin = new Padding(0, 4, 0, 12)
@@ -286,16 +474,12 @@ namespace AdvancedTodo
             {
                 Text = "Submit Data",
                 Font = new Font(Theme.universalFont, 12),
-                ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG,
-                BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                 Cursor = Cursors.Hand,
                 FlatStyle = FlatStyle.Flat,
                 Height = 40,
                 Width = 540,
 
             };
-
-            submitButton.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#7c3aed");
 
             submitButton.Click += (s, e) =>
             {
@@ -334,6 +518,45 @@ namespace AdvancedTodo
                 
             };
 
+            // Theme Checking
+            /*
+            string theme = data.Theme;
+            if(theme == "dark")
+            {
+                at.BackColor = panel.BackColor = instruction1.BackColor = instruction2.BackColor = instruction3.BackColor = instruction4.BackColor = amountOfPTS.BackColor = briefDescription.BackColor = submitButton.BackColor = Theme.darkThemeBG;
+                at.ForeColor = panel.ForeColor = instruction1.ForeColor = instruction2.ForeColor = instruction3.ForeColor = instruction4.ForeColor = amountOfPTS.ForeColor = briefDescription.ForeColor = submitButton.ForeColor = Theme.darkThemeFG;
+                
+                submitButton.FlatAppearance.BorderColor = Theme.darkThemeBorderColor;
+            } else if(theme == "darkrose")
+            {
+                at.BackColor = panel.BackColor = instruction1.BackColor = instruction2.BackColor = instruction3.BackColor = instruction4.BackColor = amountOfPTS.BackColor = briefDescription.BackColor = submitButton.BackColor = Theme.darkRoseThemeBG;
+                at.ForeColor = panel.ForeColor = instruction1.ForeColor = instruction2.ForeColor = instruction3.ForeColor = instruction4.ForeColor = amountOfPTS.ForeColor = briefDescription.ForeColor = submitButton.ForeColor = Theme.darkRoseThemeFG;
+                
+                submitButton.FlatAppearance.BorderColor = Theme.darkRoseThemeBorderColor;
+            } else if(theme == "blackAndGreen")
+            {
+                at.BackColor = panel.BackColor = instruction1.BackColor = instruction2.BackColor = instruction3.BackColor = instruction4.BackColor = amountOfPTS.BackColor = briefDescription.BackColor = submitButton.BackColor = Theme.blackAndGreenThemeBG;
+                at.ForeColor = panel.ForeColor = instruction1.ForeColor = instruction2.ForeColor = instruction3.ForeColor = instruction4.ForeColor = amountOfPTS.ForeColor = briefDescription.ForeColor = submitButton.ForeColor = Theme.blackAndGreenThemeFG;
+                
+                submitButton.FlatAppearance.BorderColor = Theme.blackAndGreenThemeBorderColor;
+            } else if(theme == "blackAndGold")
+            {
+                at.BackColor = panel.BackColor = instruction1.BackColor = instruction2.BackColor = instruction3.BackColor = instruction4.BackColor = amountOfPTS.BackColor = briefDescription.BackColor = submitButton.BackColor = Theme.blackAndGoldThemeBG;
+                at.ForeColor = panel.ForeColor = instruction1.ForeColor = instruction2.ForeColor = instruction3.ForeColor = instruction4.ForeColor = amountOfPTS.ForeColor = briefDescription.ForeColor = submitButton.ForeColor = Theme.blackAndGoldThemeFG;
+                
+                submitButton.FlatAppearance.BorderColor = Theme.blackAndGoldThemeBorderColor;
+            } else
+            {
+                at.BackColor = panel.BackColor = instruction1.BackColor = instruction2.BackColor = instruction3.BackColor = instruction4.BackColor = amountOfPTS.BackColor = briefDescription.BackColor = submitButton.BackColor = Theme.lightThemeBG;
+                at.ForeColor = panel.ForeColor = instruction1.ForeColor = instruction2.ForeColor = instruction3.ForeColor = instruction4.ForeColor = amountOfPTS.ForeColor = briefDescription.ForeColor = submitButton.ForeColor = Theme.lightThemeFG;
+                
+                submitButton.FlatAppearance.BorderColor = Theme.lightThemeBorderColor;
+            }
+            */
+
+            List<Control> widgets = new List<Control>() {at, panel, instruction1, instruction2, instruction3, instruction4, amountOfPTS, briefDescription, submitButton, task};
+            themeCheck(widgets, data.Theme);
+
             panel.Controls.Add(instruction1);
             panel.Controls.Add(instruction2);
             panel.Controls.Add(task);
@@ -348,7 +571,7 @@ namespace AdvancedTodo
 
         public static BadgeData LoadBadgeData()
         {
-            string path = @"ApplicationData/badges.json";
+            string path = Paths.pathToBadgesJSON;
             // load the data from badges.json
             if(File.Exists(path))
             {
@@ -368,7 +591,7 @@ namespace AdvancedTodo
         {
             PictureBox badgeBeginnerTasker = new()
             {
-                Image = Image.FromFile("assets/badge_beginnerTasker.png"),
+                Image = Image.FromFile(Paths.pathToBadgeBeginnerTaskerPNG),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Width = 24,
                 Height = 24,
@@ -397,7 +620,7 @@ namespace AdvancedTodo
         {
             PictureBox badgeLowerUpperClass = new()
             {
-                Image = Image.FromFile("assets/lower_upper_class.png"),
+                Image = Image.FromFile(Paths.pathToLowerUpperClassPNG),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Width = 24,
                 Height = 24,
@@ -425,7 +648,7 @@ namespace AdvancedTodo
         {
             PictureBox badgeMiddleLowerClass = new()
             {
-                Image = Image.FromFile("assets/middle_lower_class.png"),
+                Image = Image.FromFile(Paths.pathToMiddleLowerClassPNG),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Width = 24,
                 Height = 24,
@@ -454,7 +677,7 @@ namespace AdvancedTodo
         {
             PictureBox badgeUpperClass = new()
             {
-                Image = Image.FromFile("assets/upper_class.png"),
+                Image = Image.FromFile(Paths.pathToUpperClassPNG),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Width = 24,
                 Height = 24,
@@ -485,8 +708,8 @@ namespace AdvancedTodo
             Form profileForm = new()
             {
                 Text = "Your Profile",
-                Height = 800,
-                Width = 1000,
+                Height = 200,
+                Width = 500,
                 StartPosition = FormStartPosition.CenterScreen
             };
             ApplicationData data = QuestionForm.LoadData(QuestionForm.dataJSONpath);
@@ -497,7 +720,7 @@ namespace AdvancedTodo
             Label userName = new()
             {
                 Text = "YikeBones",
-                Font = new Font("Segoe UI", 24, FontStyle.Bold),
+                Font = new Font("Century Gothic", 22, FontStyle.Bold),
                 AutoSize = true,
                 Location = new Point(10, 6)
             };
@@ -506,7 +729,7 @@ namespace AdvancedTodo
             Label ultimateTooltip = new()
             {
                 Text = "",
-                Font = new Font("Segoe UI", 15, FontStyle.Bold),
+                Font = new Font(Theme.universalFont, 15, FontStyle.Bold),
                 AutoSize = true,
                 Location = new Point(10, 94)
             };
@@ -529,23 +752,8 @@ namespace AdvancedTodo
                 LoadBadgeUpperClass(profileForm, ultimateTooltip);
             }
 
-
-
-
-
-            bool dark = data.DarkOrLight == "dark";
-            if(dark)
-            {
-                profileForm.BackColor = Theme.darkThemeBG;
-                userName.BackColor = ultimateTooltip.BackColor = Theme.darkThemeBG;
-                userName.ForeColor = ultimateTooltip.ForeColor = Theme.darkThemeFG;
-                
-            } else
-            {
-                profileForm.BackColor = Theme.lightThemeBG;
-                userName.BackColor = ultimateTooltip.BackColor = Theme.lightThemeBG;
-                userName.ForeColor = ultimateTooltip.ForeColor = Theme.lightThemeFG;
-            }
+            List<Control> widgets = new List<Control>() {profileForm, userName, ultimateTooltip};
+            themeCheck(widgets, data.Theme);
     
             profileForm.Controls.Add(ultimateTooltip);
             profileForm.Controls.Add(userName);
@@ -561,9 +769,6 @@ namespace AdvancedTodo
             };
 
             ApplicationData data = QuestionForm.LoadData(QuestionForm.dataJSONpath);
-            bool dark = data.DarkOrLight == "dark";
-
-            shopForm.BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG;
             shopForm.Show();
 
             FlowLayoutPanel mainPanel = new()
@@ -642,7 +847,6 @@ namespace AdvancedTodo
                 {
                     Width     = 220,
                     Height    = 200,
-                    BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
                     Margin    = new Padding(10),
                     BorderStyle = BorderStyle.FixedSingle
                 };
@@ -668,8 +872,7 @@ namespace AdvancedTodo
                     Text = item.cost_points + " coins and " + item.cost_ttc + " TTC",
                     Font = new Font(Theme.universalFont, 10, FontStyle.Bold),
                     AutoSize = true,
-                    Location = new Point(10, 100),
-                    ForeColor = ColorTranslator.FromHtml("#7c3aed")
+                    Location = new Point(10, 100)
                 };
 
                 Button buyBtn = new()
@@ -681,13 +884,8 @@ namespace AdvancedTodo
                     Location = new Point(10, 135),
                     Cursor = Cursors.Hand,
                     FlatStyle = FlatStyle.Flat,
-                    BackColor = dark ? Theme.darkThemeBG : Theme.lightThemeBG,
-                    ForeColor = dark ? Theme.darkThemeFG : Theme.lightThemeFG
                 };
                 buyBtn.FlatAppearance.BorderSize = 1;
-                buyBtn.FlatAppearance.BorderColor = dark ? Theme.darkThemeBorderColor : Theme.lightThemeBorderColor;
-                name.BackColor = cost.BackColor   = dark ? Theme.darkThemeBG : Theme.lightThemeBG;
-                name.ForeColor = cost.ForeColor   = dark ? Theme.darkThemeFG : Theme.lightThemeFG;
 
                 if(currentItem.category == "theme")
                 {
@@ -731,6 +929,9 @@ namespace AdvancedTodo
                     }
                 };
 
+                List<Control> widgets = new List<Control>() {icon, name, cost, buyBtn, card};
+                themeCheck(widgets, data.Theme);
+
                 card.Controls.Add(icon);
                 card.Controls.Add(name);
                 card.Controls.Add(cost);
@@ -738,6 +939,7 @@ namespace AdvancedTodo
                 mainPanel.Controls.Add(card);
 
             }
+            themeCheck(new List<Control>() {shopForm, mainPanel}, data.Theme);
             shopForm.Controls.Add(mainPanel);
 
         }
@@ -760,7 +962,6 @@ namespace AdvancedTodo
             */
             ShopItemsData shopItems = LoadShopItemsData();
             ApplicationData data = QuestionForm.LoadData(QuestionForm.dataJSONpath);
-            bool dark = data.DarkOrLight == "dark";
             
             // Declaring the panels
             
@@ -768,7 +969,7 @@ namespace AdvancedTodo
             {
                 Width     = 8,
                 Dock      = DockStyle.Right,
-                BackColor = data.DarkOrLight switch
+                BackColor = data.Theme switch
                 {
                     "dark"          => Theme.darkThemeBG,
                     "darkrose"      => Theme.darkRoseThemeBG,
@@ -869,12 +1070,14 @@ namespace AdvancedTodo
                     ApplicationData write = new ApplicationData()
                     {
                         LoggedBefore = data.LoggedBefore,
-                        DarkOrLight = "darkrose"
+                        Theme = "darkrose"
                     };
 
                     OverwriteData(write);
-                    // TODO
+                    MessageBox.Show("Theme Applied! Please restart the app to have it take effect.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 };
+                
+                themeDarkRoseBtn.FlatAppearance.BorderColor      = Theme.darkRoseThemeBorderColor;
             }
             if(shopItems.ownsBlackAndGreenTheme)
             {
@@ -888,7 +1091,18 @@ namespace AdvancedTodo
                 themeBlackAndGreenBtn.Cursor    = Cursors.Hand;
                 themeBlackAndGreenBtn.MouseEnter += Form1.blackAndGreenMouseEnter;
                 themeBlackAndGreenBtn.MouseLeave += Form1.blackAndGreenMouseLeave;
+                themeBlackAndGreenBtn.FlatAppearance.BorderColor = Theme.blackAndGreenThemeBorderColor;
+                themeBlackAndGreenBtn.Click += (s, e) =>
+                {
+                    ApplicationData write = new ApplicationData()
+                    {
+                        LoggedBefore = data.LoggedBefore,
+                        Theme = "blackAndGreen"
+                    };
 
+                    OverwriteData(write);
+                    MessageBox.Show("Theme Applied! Please restart the app to have it take effect.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                };
             }
 
             if(shopItems.ownsBlackAndGoldTheme)
@@ -903,15 +1117,24 @@ namespace AdvancedTodo
                 themeBlackAndGoldBtn.Cursor    = Cursors.Hand;
                 themeBlackAndGoldBtn.MouseEnter += Form1.blackAndGoldMouseEnter;
                 themeBlackAndGoldBtn.MouseLeave += Form1.blackAndGoldMouseLeave;
+                themeBlackAndGoldBtn.FlatAppearance.BorderColor  = Theme.blackAndGoldThemeBorderColor;
+                themeBlackAndGoldBtn.Click += (s, e) =>
+                {
+                    ApplicationData write = new ApplicationData()
+                    {
+                        LoggedBefore = data.LoggedBefore,
+                        Theme = "blackAndGold"
+                    };
+
+                    OverwriteData(write);
+                    MessageBox.Show("Theme Applied! Please restart the app to have it take effect.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                };
 
             }
 
             themeDarkBtn.FlatAppearance.BorderSize           = themeLightBtn.FlatAppearance.BorderSize = themeDarkRoseBtn.FlatAppearance.BorderSize = themeBlackAndGreenBtn.FlatAppearance.BorderSize = themeBlackAndGoldBtn.FlatAppearance.BorderSize = 1;
             themeDarkBtn.FlatAppearance.BorderColor          = Theme.darkThemeBorderColor;
             themeLightBtn.FlatAppearance.BorderColor         = Theme.lightThemeBorderColor;
-            themeDarkRoseBtn.FlatAppearance.BorderColor      = Theme.darkRoseThemeBorderColor;
-            themeBlackAndGreenBtn.FlatAppearance.BorderColor = Theme.blackAndGreenThemeBorderColor;
-            themeBlackAndGoldBtn.FlatAppearance.BorderColor  = Theme.blackAndGoldThemeBorderColor;
 
             themeDarkBtn.MouseEnter += Form1.darkMouseEnter;
             themeLightBtn.MouseEnter += Form1.lightMouseEnter;
@@ -920,19 +1143,8 @@ namespace AdvancedTodo
             themeLightBtn.MouseLeave += Form1.lightMouseLeave;
             
             
-
-
-            if(dark)
-            {
-                settingsForm.BackColor = themePanel.BackColor = fonts.BackColor = profileTitles.BackColor = changeUsername.BackColor = Theme.darkThemeBG;
-                themeInform.BackColor = Theme.darkThemeBG;
-                themeInform.ForeColor = Theme.darkThemeFG;
-            } else
-            {
-                settingsForm.BackColor = themePanel.BackColor = fonts.BackColor = profileTitles.BackColor = changeUsername.BackColor = Theme.lightThemeBG;
-                themeInform.BackColor = Theme.lightThemeBG;
-                themeInform.ForeColor = Theme.lightThemeFG;
-            }
+            List<Control> widgets = new List<Control>() {settingsForm, themePanel, fonts, changeUsername, profileTitles, themeInform};
+            themeCheck(widgets, data.Theme);
 
             themePanel.Controls.Add(themeInform);
             if(themeBlackAndGoldBtn.Text != "")
@@ -1018,41 +1230,8 @@ namespace AdvancedTodo
                 Cursor = Cursors.Hand
             };
 
-
-            if(data.DarkOrLight == "dark")
-            {
-                thePoints.BackColor = TaskInfo.BackColor = givenDescriptionInform.BackColor = givenDescription.BackColor = Theme.darkThemeBG;
-                thePoints.ForeColor = TaskInfo.ForeColor = givenDescriptionInform.ForeColor = givenDescription.ForeColor = Theme.darkThemeFG;
-                completionButton.BackColor = Color.DarkGreen;
-                completionButton.ForeColor = Color.White;
-                completionButton.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#00c753");
-
-                completionButton.MouseEnter += Form1.darkMouseEnter;
-                completionButton.MouseLeave += (s, e) =>
-                {
-                    completionButton.BackColor = Color.DarkGreen;
-                    completionButton.ForeColor = Color.White;
-                    completionButton.FlatStyle = FlatStyle.Flat;
-                    completionButton.FlatAppearance.BorderSize = 2;
-                };
-            } else
-            {
-                thePoints.BackColor = TaskInfo.BackColor = givenDescriptionInform.BackColor = givenDescription.BackColor = Theme.lightThemeBG;
-                thePoints.ForeColor = TaskInfo.ForeColor = givenDescriptionInform.ForeColor = givenDescription.ForeColor = Theme.lightThemeFG;
-                completionButton.BackColor = Color.Green;
-                completionButton.ForeColor = Color.Black;
-                completionButton.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#00c753");
-
-                completionButton.MouseEnter += Form1.lightMouseEnter;
-                completionButton.MouseLeave += (s, e) =>
-                {
-                    completionButton.BackColor = Color.Green;
-                    completionButton.ForeColor = Color.White;
-                    completionButton.FlatStyle = FlatStyle.Flat;
-                    
-                    completionButton.FlatAppearance.BorderSize = 2;
-                };
-            }
+            List<Control> widgets = new List<Control>() {TaskInfo, panel, thePoints, givenDescriptionInform, givenDescription, completionButton};
+            themeCheck(widgets, data.Theme);
 
            
             completionButton.Click += (s, e) =>

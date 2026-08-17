@@ -15,7 +15,8 @@ static class Program
         ApplicationConfiguration.Initialize();
 
         // read data from the data.json file
-        ApplicationData data = QuestionForm.LoadData(@"ApplicationData/data.json");
+        
+        ApplicationData data = QuestionForm.LoadData(Paths.pathToDataJSON);
         if(data.LoggedBefore)
         {
             Application.Run(new Form1());

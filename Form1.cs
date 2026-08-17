@@ -2,8 +2,6 @@ using System.Drawing;
 
 namespace AdvancedTodo;
 
-// TODO: Work on the Profile system ;)
-
 public partial class Form1 : Form
 {
     private System.Windows.Forms.Timer refreshTimer;
@@ -94,6 +92,23 @@ public partial class Form1 : Form
         btn.BackColor = Theme.blackAndGreenThemeBG;
         btn.ForeColor = Theme.blackAndGreenThemeFG;
     }
+
+    public static void generalMouseEnter(object s, EventArgs e, Color colorEnterBG, Color colorEnterFG)
+    {
+        Button btn = (Button)s;
+
+        btn.BackColor = colorEnterBG;
+        btn.ForeColor = colorEnterFG;
+    }
+
+    public static void generalMouseLeave(object s, EventArgs e, Color colorLeaveBG, Color colorLeaveFG)
+    {
+        Button btn = (Button)s;
+
+        btn.BackColor = colorLeaveBG;
+        btn.ForeColor = colorLeaveFG;
+    }
+
 
     private void RefreshUI(object? sender, EventArgs e) //* To refresh the UI cleanly
     {
@@ -226,7 +241,9 @@ public partial class Form1 : Form
         string[] task_pts = File.ReadAllLines("ApplicationData/pts.txt");
         string[] task_desc = File.ReadAllLines("ApplicationData/desc.txt");
 
-        ApplicationData dataJSON = QuestionForm.LoadData(QuestionForm.dataJSONpath);
+
+        ApplicationData dataJSON = QuestionForm.LoadData(Paths.pathToDataJSON);
+        BtnFunc.themeCheck(new List<Control>() {this}, dataJSON.Theme);
 
         for (int i = 0; i < task_lines.Length; i++)
         {
@@ -237,7 +254,7 @@ public partial class Form1 : Form
                 Text = task_lines[i].Trim(),
                 AutoSize = true,
                 Location = new Point(320, 50 + (i * 50)),
-                Font = new Font("Ubuntu Mono", 12)
+                Font = new Font(Theme.universalFont, 12)
             };
 
             Label points = new()
@@ -245,7 +262,7 @@ public partial class Form1 : Form
                 Text = task_pts[i].Trim(),
                 AutoSize = true,
                 Location = new Point(1100, 50 + (i * 50)),
-                Font = new Font("Ubuntu Mono", 13)
+                Font = new Font(Theme.universalFont, 13)
             };
 
             newTask.Click += (s, e) => 
@@ -262,39 +279,12 @@ public partial class Form1 : Form
             taskLabels.Add(newTask);
             taskPoints.Add(points);
 
-            if (dataJSON.DarkOrLight == "dark")
-            {
-                newTask.BackColor = points.BackColor = Theme.darkThemeBG;
-                newTask.ForeColor = points.ForeColor = Theme.darkThemeFG;
+            //! THINK OF A FIX HERE
+            //! REFERENCING TODO.TXT / 2026.08.16
+            BtnFunc.addHoverEffect(newTask, dataJSON.Theme);
 
-                newTask.MouseEnter += (s, e) =>
-                {
-                    newTask.ForeColor = ColorTranslator.FromHtml("#181818ff");
-                    Cursor = Cursors.Hand;
-                };
-                newTask.MouseLeave += (s, e) =>
-                {
-                    newTask.ForeColor = Color.White;
-                    Cursor = Cursors.Default;
-                };
-
-            }
-            else
-            {
-                newTask.BackColor = points.BackColor = Theme.lightThemeBG;
-                newTask.ForeColor = points.ForeColor = Theme.lightThemeFG;
-                
-                newTask.MouseEnter += (s, e) =>
-                {
-                    newTask.ForeColor = ColorTranslator.FromHtml("#d3d3d3ff");
-                    Cursor = Cursors.Hand;
-                };
-                newTask.MouseLeave += (s, e) =>
-                {
-                    newTask.ForeColor = Color.Black;
-                    Cursor = Cursors.Hand;
-                };
-            }
+            List<Control> listOfWidgets = new List<Control>() {newTask, points};
+            BtnFunc.themeCheck(listOfWidgets, dataJSON.Theme);
         }
     }
 
@@ -303,7 +293,7 @@ public partial class Form1 : Form
         this.DoubleBuffered = true;
 
         this.Text = "AdvancedTodo";
-        this.Width = 1200;
+        this.Width = 1250;
         this.Height = 800;
         this.StartPosition = FormStartPosition.CenterScreen;
         
@@ -323,7 +313,7 @@ public partial class Form1 : Form
     {
         
 
-        ApplicationData dataJSON = QuestionForm.LoadData(QuestionForm.dataJSONpath);
+        ApplicationData dataJSON = QuestionForm.LoadData(Paths.pathToDataJSON);
         UserStats userStatistics = BtnFunc.LoadUserStats();
 
         Panel buttonPanel = new()
@@ -443,63 +433,15 @@ public partial class Form1 : Form
         Controls.Add(buttonPanel);
         
 
-        // Checks if the dark or light theme is selected, sets the back and forecolor to the specified theme's
-        if(dataJSON.DarkOrLight == "dark")
-        {
+        List<Control> widgets = new List<Control>() {addTask, shop, profile, settings, total_tasks_user_completed_inform, users_wealth_inform};
+        BtnFunc.themeCheck(widgets, dataJSON.Theme);
+        BtnFunc.themeCheckSidePanel(buttonPanel, widgets, dataJSON.Theme);
 
-            // Custom function for more readable code; the parameters: Button buttonWidget, isDark, borderColor
-            StyleButton(addTask,  true, Theme.darkThemeBorderColor, Theme.darkThemeSidePanelBG);
-            StyleButton(profile,  true, Theme.darkThemeBorderColor, Theme.darkThemeSidePanelBG);
-            StyleButton(shop,     true, Theme.darkThemeBorderColor, Theme.darkThemeSidePanelBG);
-            StyleButton(settings, true, Theme.darkThemeBorderColor, Theme.darkThemeSidePanelBG);
-
-
-            // main form
-            this.BackColor = Theme.darkThemeBG;
-            // sidepanel
-            buttonPanel.BackColor          = Theme.darkThemeSidePanelBG;
-            users_wealth_inform.BackColor = total_tasks_user_completed_inform.BackColor = Theme.darkThemeSidePanelBG; // because it's a widget part of the side panel
-            users_wealth_inform.ForeColor = total_tasks_user_completed_inform.ForeColor = task_inform.ForeColor = AOPTS_inform.ForeColor = Theme.darkThemeFG; // the forecolor should be white tho
-
-            task_inform.BackColor = AOPTS_inform.BackColor = Theme.darkThemeBG;
-
-            // Button Hover Effects
-            addTask.MouseEnter    += darkMouseEnter;
-            profile.MouseEnter    += darkMouseEnter;
-            shop.MouseEnter       += darkMouseEnter;
-            settings.MouseEnter   += darkMouseEnter;
-
-            addTask.MouseLeave    += darkMouseLeave;
-            profile.MouseLeave    += darkMouseLeave;
-            shop.MouseLeave       += darkMouseLeave;
-            settings.MouseLeave   += darkMouseLeave;
-            // Button functionalities
-            
-
-
-        } else // default to light
-        {
-            StyleButton(addTask,  false, Theme.lightThemeBorderColor, Theme.lightThemeSidePanelBG);
-            StyleButton(profile,  false, Theme.lightThemeBorderColor, Theme.lightThemeSidePanelBG);
-            StyleButton(shop,     false, Theme.lightThemeBorderColor, Theme.lightThemeSidePanelBG);
-            StyleButton(settings, false, Theme.lightThemeBorderColor, Theme.lightThemeSidePanelBG);
-
-            // Button Hover Effects
-            addTask.MouseEnter    += lightMouseEnter;
-            profile.MouseEnter    += lightMouseEnter;
-            shop.MouseEnter       += lightMouseEnter;
-            settings.MouseEnter   += lightMouseEnter;
-
-            this.BackColor                 = Theme.lightThemeBG;
-            buttonPanel.BackColor          = Theme.lightThemeSidePanelBG;
-
-
-            addTask.MouseLeave    += lightMouseLeave;
-            profile.MouseLeave    += lightMouseLeave;
-            shop.MouseLeave       += lightMouseLeave;
-            settings.MouseLeave   += lightMouseLeave;
-            
-        }
+        //TODO:
+        /*
+        1. Make the StyleButton() function compatible with the new themes
+        2. Make it so that buttonPanel and its widgets have the sidepanel backgroundcolor, and not the simple background color
+        */
         
         //! Functionalities
         addTask.Click  += BtnFunc.AddTaskFunction ; 
